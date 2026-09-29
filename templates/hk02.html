@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container card-custom" style="max-width: 700px;">
+    <h3 class="text-center mb-3">返却</h3>
+    <p class="text-center text-muted">以下の内容でよろしいでしょうか</p>
+
+    <table class="table table-bordered align-middle mb-4">
+        <thead class="table-light">
+            <tr>
+                <th>管理番号</th>
+                <th>ISBN</th>
+                <th>書名</th>
+                <th>種別</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.management_number }}</td>
+                <td>{{ item.book.isbn }}</td>
+                <td>{{ item.book.title }}</td>
+                <td>{{ '書籍' if item.book.book_type == 'book' else '雑誌' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="{{ url_for('return_book.hk02') }}" method="POST">
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('return_book.hk01') }}" class="btn btn-outline-secondary">キャンセル (HK01)</a>
+            <button type="submit" class="btn btn-primary">決定 ⇒ HK03</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

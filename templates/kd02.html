@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container card-custom" style="max-width: 700px;">
+    <h3 class="text-center mb-3">貸出</h3>
+    
+    <div class="mb-3">
+        <span><strong>会員番号:</strong> &lt;{{ member.member_number }}&gt;</span>
+        <span class="ms-3"><strong>氏名:</strong> &lt;{{ member.name }}&gt;</span>
+    </div>
+
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>管理番号</th>
+                <th>ISBN / 書名</th>
+                <th>種別</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in valid_items %}
+            <tr>
+                <td>{{ item.management_number }}</td>
+                <td>{{ item.book.isbn }} {{ item.book.title }}</td>
+                <td>{{ '書籍' if item.book.book_type == 'book' else '雑誌' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-end mb-3 font-weight-bold">
+        残り &lt;<strong>{{ remaining_allowance }}</strong>&gt; 冊 貸出可能
+    </div>
+
+    <!-- 学生が雑誌を持ってきた場合のみ表示 -->
+    {% if magazine_warnings %}
+    <div class="alert alert-danger">
+        <p class="fw-bold mb-1">以下は雑誌のため、学生の方に貸出しできません 本を取り除いてください</p>
+        <ul class="mb-0">
+            {% for book in magazine_warnings %}
+                <li>・{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('loan.kd02') }}" method="POST">
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('loan.kd01') }}" class="btn btn-outline-secondary">キャンセル (KD01)</a>
+            <button type="submit" class="btn btn-primary" {% if remaining_allowance < 0 %}disabled{% endif %}>決定 ⇒ KD03</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

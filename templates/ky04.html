@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-custom text-center">
+    <h3 class="mb-4">貸出予約</h3>
+    <div class="alert alert-success my-4">
+        貸出予約が完了しました
+    </div>
+    <a href="{{ url_for('reservation.ky01') }}" class="btn btn-secondary">戻る (KY01)</a>
+</div>
+{% endblock %}

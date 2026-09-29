@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-custom text-center">
+    <h3 class="mb-4">貸出</h3>
+    <div class="alert alert-success my-4">
+        <p class="fs-5 mb-1">登録が完了しました</p>
+        <p class="fs-6 mb-0">返却期限は &lt;<strong>{{ due_date }}</strong>&gt; です</p>
+    </div>
+    <a href="{{ url_for('loan.kd01') }}" class="btn btn-secondary">戻る (KD01)</a>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-custom text-center">
+    <h3 class="mb-3">返却</h3>
+    <div class="alert alert-success my-3">
+        登録が完了しました
+    </div>
+
+    {% if notified_books %}
+    <div class="alert alert-info text-start my-3">
+        <p class="fw-bold mb-1">以下の図書は貸出予約されています</p>
+        <p class="mb-1">予約者にメールを送信しました</p>
+        <p class="fw-bold text-danger mb-2">本は予約棚に保管してください</p>
+        <ul class="mb-0">
+            {% for book in notified_books %}
+                <li>・{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('return_book.hk01') }}" class="btn btn-secondary mt-2">戻る (HK01)</a>
+</div>
+{% endblock %}

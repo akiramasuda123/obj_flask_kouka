@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container card-custom" style="max-width: 800px;">
+    <h3 class="text-center mb-4">貸出予約</h3>
+    
+    {% if member.member_type == 'student' %}
+        <div class="alert alert-warning text-center">学生に対して雑誌は選択できません</div>
+    {% endif %}
+
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ISBN</th>
+                <th>書名</th>
+                <th>種別</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ '書籍' if book.book_type == 'book' else '雑誌' }}</td>
+                <td>
+                    {% if member.member_type == 'student' and book.book_type == 'magazine' %}
+                        <button class="btn btn-sm btn-secondary" disabled>選択不可</button>
+                    {% else %}
+                        <a href="{{ url_for('reservation.ky03', book_id=book.id) }}" class="btn btn-sm btn-outline-primary">選択 ⇒ KY03</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-start mt-3">
+        <a href="{{ url_for('reservation.ky01') }}" class="btn btn-outline-secondary">戻る (KY01)</a>
+    </div>
+</div>
+{% endblock %}

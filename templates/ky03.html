@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-custom">
+    <h3 class="text-center mb-3">貸出予約</h3>
+    <p class="text-center text-muted">以下の内容でよろしいでしょうか</p>
+
+    <div class="border p-3 mb-4 rounded bg-light">
+        <p class="mb-1"><strong>会員番号:</strong> {{ member.member_number }}</p>
+        <p class="mb-1"><strong>氏名:</strong> {{ member.name }}</p>
+        <p class="mb-1"><strong>メールアドレス:</strong> {{ member.email }}</p>
+        <hr>
+        <p class="mb-1"><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <p class="mb-0"><strong>書名:</strong> {{ book.title }}</p>
+    </div>
+
+    <form action="{{ url_for('reservation.ky03', book_id=book.id) }}" method="POST">
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('reservation.ky01') }}" class="btn btn-outline-secondary">キャンセル ⇒ KY01</a>
+            <button type="submit" class="btn btn-primary">決定 ⇒ KY04</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
